@@ -1,0 +1,26 @@
+{
+  "name": "rankinglinhamaster",
+  "version": "1.0.0",
+  "description": "Ranking dos vendedores da Linha Master para premiação de campanha Navegando",
+  "main": "app.js",
+  "scripts": {
+    "test": "run test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Ppetelak/rankingLinhaMaster.git"
+  },
+  "author": "Pablo Petelak",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Ppetelak/rankingLinhaMaster/issues"
+  },
+  "homepage": "https://github.com/Ppetelak/rankingLinhaMaster#readme",
+  "dependencies": {
+    "ejs": "^3.1.10",
+    "express": "^4.19.2",
+    "multer": "^1.4.5-lts.1",
+    "promise-mysql": "^5.2.0",
+    "xlsx": "^0.18.5"
+  }
+}
