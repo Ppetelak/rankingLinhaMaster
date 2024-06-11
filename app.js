@@ -59,13 +59,13 @@ app.post('/upload/corretores', upload.single('file'), (req, res) => {
 app.post('/upload/corretoras', upload.single('file'), (req, res) => {
     const columns = ['cnpjCorretora', 'nome', 'pontos'];
     const insertQuery = 'INSERT INTO corretoras (numeroDocumento, nome, pontos) VALUES (?, ?, ?)';
-    handleUpload(req, res, 'Corretoras', insertQuery, columns);
+    handleUpload(req, res, 'corretoras', insertQuery, columns);
 });
 
 app.post('/upload/supervisores', upload.single('file'), (req, res) => {
     const columns = ['cpfSupervisor', 'nome', 'pontos'];
     const insertQuery = 'INSERT INTO supervisores (numeroDocumento, nome, pontos) VALUES (?, ?, ?)';
-    handleUpload(req, res, 'Supervisores', insertQuery, columns);
+    handleUpload(req, res, 'supervisores', insertQuery, columns);
 });
 
 app.get('/ranking', (req, res) => {
