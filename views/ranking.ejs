@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Consulta Ranking - Campanha Linha Master Navegando</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
+    <link rel="shortcut icon" href="/assets/favicon.png" type="image/x-icon">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+    <link rel="stylesheet" href="css/style.css">
+</head>
+<body>
+    <div class="ranking">
+        <div class="container mt-5">
+            <div class="row d-flex align-items-center justify-content-center">
+                <img src="/assets/logolinhamaster.png" class="img-fluid d-block" alt="Campanha Linha Master Navegando">
+            </div>
+            <h1 class="mb-4">Campanha Navegando</h1>
+            <p>Para consultar sua posição no ranking basta insirir o seu CPF ou CNPJ e selecione se é Corretora, Corretor ou Supervisor, depois só clicar em Consultar Posição no Ranking.</p>
+            <form id="rankingForm" class="row g-3">
+                <div class="col-md-4">
+                    <label for="numeroDocumento" class="form-label"><strong>Nº do Documento</strong></label>
+                    <input type="text" class="form-control" id="numeroDocumento" name="numeroDocumento" required>
+                </div>
+                <div class="col-md-4">
+                    <label for="funcao" class="form-label"><strong>Função</strong></label>
+                    <select class="form-select" id="funcao" name="funcao" required>
+                        <option value="supervisores">Supervisor</option>
+                        <option value="corretores">Corretor</option>
+                        <option value="corretoras">Corretora</option>
+                    </select>
+                </div>
+                <div class="col-md-4 d-flex align-items-end">
+                    <button type="submit" class="btn btn-primary w-100">Consultar</button>
+                </div>
+            </form>
+            <div class="card" id="loader">
+                <div class="loader-3">
+                    <div class="window"></div>
+                    <div class="square"></div>
+                </div>
+            </div>
+            <div class="mt-4" id="result">
+                <h3>Resultado:</h3>
+            <table class="table table-striped blurred-table">
+                <thead>
+                    <tr>
+                        <th>Posição</th>
+                        <th>Nome</th>
+                        <th>CPF/CNPJ</th>
+                        <th>Pontos</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+            <p>Lembrando que o ranking é atualizado todo dia 15 e 30 ou próximo dia útil de todo mês</p>
+            <p>Para consultar o regulamento completo da campanha <a href="">clique aqui</a></p>
+            <div class="tablefooter">
+                <div id="logoMounthermon">
+                  <img src="/assets/logomounthermonoriginal.png">
+                </div>
+                <div id="logoCompar">
+                  <img src="/assets/logocomparoriginal.png">
+                </div>
+                <div id="logoClasse">
+                  <img src="/assets/classeadministradoraoriginal.png">
+                </div>
+              </div>
+        </div>
+    </div>
+    
+    <script>
+        document.getElementById('rankingForm').addEventListener('submit', async function(e) {
+            e.preventDefault();
+
+            // Mostrar o loader e esconder a tabela
+            document.getElementById('loader').style.display = 'block';
+            document.getElementById('result').classList.add('blurred-table');
+            document.getElementById('result').innerHTML = ''; // Limpar resultado anterior
+
+            const numeroDocumento = document.getElementById('numeroDocumento').value;
+            const funcao = document.getElementById('funcao').value;
+
+            // Adicionar atraso de 2 segundos antes de fazer a requisição
+            await new Promise(resolve => setTimeout(resolve, 2000));
+
+            const response = await fetch(`/consultaRanking/${numeroDocumento}/${funcao}`);
+            const result = await response.json();
+
+            const resultDiv = document.getElementById('result');
+            if (result.length > 0) {
+                resultDiv.innerHTML = `
+                    <h3>Resultado:</h3>
+                    <table class="table table-striped">
+                        <thead>
+                            <tr>
+                                <th>Posição</th>
+                                <th>Nome</th>
+                                <th>CPF/CNPJ</th>
+                                <th>Pontos</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>${result[0].ranking}º</td>
+                                <td>${result[0].nome}</td>
+                                <td>${result[0].numeroDocumento}</td>
+                                <td>${result[0].pontos}</td>
+                            </tr>
+                        </tbody>
+                    </table>
+                `;
+            } else {
+                resultDiv.innerHTML = '<p>Nenhum resultado encontrado.</p>';
+            }
+
+            // Esconder o loader e mostrar a tabela corretamente
+            document.getElementById('loader').style.display = 'none';
+            document.getElementById('result').classList.remove('blurred-table');
+        });
+    </script>
+</body>
+</html>

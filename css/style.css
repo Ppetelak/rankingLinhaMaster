@@ -1,0 +1,155 @@
+*{
+    --azulEscuro: #20325d;
+    --branco: #ffffff;
+    --laranja: #EE7A23;
+    --azulClaro: #2BB3AF;
+}
+
+body{
+    background: var(--azulEscuro);
+    margin: 0 auto;
+    padding: 3rem;
+    font-family: "Montserrat", sans-serif;
+}
+
+.ranking {
+    width: 50%;
+    margin: 0 auto;
+    padding: 3rem;
+    background: var(--branco);
+    border-radius: 12px;
+}
+
+.ranking h1 {
+    text-align: center;
+}
+
+.ranking img {
+    width: 50%;
+    height: 50%;
+    border-radius: 12px;
+    text-align: center;
+}
+
+.ranking button {
+    background: var(--laranja);
+    border: none;
+}
+
+.ranking button:hover {
+    background: var(--azulClaro);
+    border: none;
+}
+
+table {
+    border-radius: 12px;
+    border-collapse: collapse;
+}
+
+table thead{
+    background: var(--azulEscuro);
+    color: var(--branco);
+}
+
+.tablefooter {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    margin-top: 1rem;
+}
+
+.card {
+	display: flex;
+	width: 100px; 
+	height: 100px;
+	margin:0 auto;
+	padding: 2em;
+	align-items: center;
+    justify-content: center;
+	background: var(--branco);
+	border:none;		
+}
+
+.blurred-table {
+    filter: blur(5px);
+    opacity: 0.5;
+}
+
+#loader{
+    display: none;
+}
+
+.loader-3 {
+	position:relative;
+	width: 40%;
+	height: 40%;
+}
+
+.loader-3 .square {
+	box-sizing:border-box;
+	position: absolute;
+	width: 50%;
+	height: 50%;
+	background: blue;
+	padding: 10px;
+	animation: 
+		loader-3 1s infinite ease-in-out,
+		loader-3-color 4s infinite step-end;
+}
+
+@keyframes loader-3 {
+	0% {
+		transform:translate(0);
+	}
+
+	25% {
+		transform:translate(100%, 0);
+	}	
+
+	50% {
+		transform:translate(100%, 100%);
+	}
+
+	75% {
+		transform:translate(0, 100%);
+	}
+	100%{
+		transform:translate(0);
+	}	
+}
+
+@keyframes loader-3-fade {
+	0% {
+		opacity: 1;
+	}
+	25% {
+		opacity: 0.25;
+	}
+	50% {
+		opacity: 1;
+	}
+	75% {
+		opacity: 0.25;
+	}
+	100% {
+		opacity: 1;
+	}
+}
+
+@keyframes loader-3-color {
+	0% {
+		background-color: var(--azulEscuro);
+	}
+	25% {
+		background-color: var(--laranja);
+	}
+	50% {
+		background-color: var(--azulClaro);
+	}
+	75% {
+		background-color: var(--branco);
+	}
+	100% {
+		background-color: #eee;
+	}
+}

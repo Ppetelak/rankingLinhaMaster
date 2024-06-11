@@ -1,91 +1,58 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Upload de Planilhas</title>
-    <link
-        href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css"
-        rel="stylesheet"
-    />
-  </head>
-    <body>
-        <div class="container mt-5">
-            <h1 class="mb-4">Upload de Planilhas</h1>
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Upload de Planilhas</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
+</head>
+<body>
+    <div class="container mt-5">
+        <h1 class="mb-4">Upload de Planilhas</h1>
 
-            <!-- Formulário para upload de planilha de corretores -->
-            <div class="mb-4">
-                <h2>Upload de Planilha de Corretores</h2>
-                <form
-                action="/upload/corretores"
-                method="post"
-                enctype="multipart/form-data"
-                >
+        <% if (message && messageType) { %>
+            <div class="alert alert-<%= messageType %> mt-3" role="alert">
+                <%= message %>
+            </div>
+        <% } %>
+
+        <!-- Formulário para upload de planilha de corretores -->
+        <div class="mb-4">
+            <h2>Upload de Planilha de Corretores</h2>
+            <form action="/upload/corretores" method="post" enctype="multipart/form-data">
                 <div class="mb-3">
-                    <label for="fileCorretores" class="form-label"
-                    >Escolha o arquivo</label
-                    >
-                    <input
-                    class="form-control"
-                    type="file"
-                    id="fileCorretores"
-                    name="file"
-                    required
-                    />
+                <label for="fileCorretores" class="form-label">Escolha o arquivo</label>
+                <input class="form-control" type="file" id="fileCorretores" name="file" required>
                 </div>
                 <button type="submit" class="btn btn-primary">Upload</button>
-                </form>
-            </div>
-
-        <!-- Formulário para upload de planilha de corretoras -->
-            <div class="mb-4">
-                <h2>Upload de Planilha de Corretoras</h2>
-                <form
-                action="/upload/corretoras"
-                method="post"
-                enctype="multipart/form-data"
-                >
-                <div class="mb-3">
-                    <label for="fileCorretoras" class="form-label"
-                    >Escolha o arquivo</label
-                    >
-                    <input
-                    class="form-control"
-                    type="file"
-                    id="fileCorretoras"
-                    name="file"
-                    required
-                    />
-                </div>
-                <button type="submit" class="btn btn-primary">Upload</button>
-                </form>
-            </div>
-
-        <!-- Formulário para upload de planilha de supervisores -->
-            <div>
-                <h2>Upload de Planilha de Supervisores</h2>
-                <form
-                action="/upload/supervisores"
-                method="post"
-                enctype="multipart/form-data"
-                >
-                    <div class="mb-3">
-                        <label for="fileSupervisores" class="form-label"
-                        >Escolha o arquivo</label
-                        >
-                        <input
-                            class="form-control"
-                            type="file"
-                            id="fileSupervisores"
-                            name="file"
-                            required
-                        />
-                    </div>
-                    <button type="submit" class="btn btn-primary">Upload</button>
-                </form>
-            </div>
+            </form>
         </div>
 
-        <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
-    </body>
+        <!-- Formulário para upload de planilha de corretoras -->
+        <div class="mb-4">
+            <h2>Upload de Planilha de Corretoras</h2>
+            <form action="/upload/corretoras" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                <label for="fileCorretoras" class="form-label">Escolha o arquivo</label>
+                <input class="form-control" type="file" id="fileCorretoras" name="file" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+
+        <!-- Formulário para upload de planilha de supervisores -->
+        <div>
+            <h2>Upload de Planilha de Supervisores</h2>
+            <form action="/upload/supervisores" method="post" enctype="multipart/form-data">
+                <div class="mb-3">
+                <label for="fileSupervisores" class="form-label">Escolha o arquivo</label>
+                <input class="form-control" type="file" id="fileSupervisores" name="file" required>
+                </div>
+                <button type="submit" class="btn btn-primary">Upload</button>
+            </form>
+        </div>
+    </div>
+
+<script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js"></script>
+</body>
 </html>
