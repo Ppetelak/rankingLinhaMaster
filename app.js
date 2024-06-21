@@ -51,20 +51,20 @@ async function handleUpload(req, res, tableName, insertQuery, columns) {
 }
 
 app.post('/upload/corretores', upload.single('file'), (req, res) => {
-    const columns = ['cpfCorretor', 'nome', 'pontos'];
-    const insertQuery = 'INSERT INTO corretores (numeroDocumento, nome, pontos) VALUES (?, ?, ?)';
+    const columns = ['cpfCorretor', 'nome', 'pontos', 'estado'];
+    const insertQuery = 'INSERT INTO corretores (numeroDocumento, nome, pontos, estado) VALUES (?, ?, ?, ?)';
     handleUpload(req, res, 'corretores', insertQuery, columns);
 });
 
 app.post('/upload/corretoras', upload.single('file'), (req, res) => {
-    const columns = ['cnpjCorretora', 'nome', 'pontos'];
-    const insertQuery = 'INSERT INTO corretoras (numeroDocumento, nome, pontos) VALUES (?, ?, ?)';
+    const columns = ['cnpjCorretora', 'nome', 'pontos', 'estado'];
+    const insertQuery = 'INSERT INTO corretoras (numeroDocumento, nome, pontos, estado) VALUES (?, ?, ?, ?)';
     handleUpload(req, res, 'corretoras', insertQuery, columns);
 });
 
 app.post('/upload/supervisores', upload.single('file'), (req, res) => {
-    const columns = ['cpfSupervisor', 'nome', 'pontos'];
-    const insertQuery = 'INSERT INTO supervisores (numeroDocumento, nome, pontos) VALUES (?, ?, ?)';
+    const columns = ['cpfSupervisor', 'nome', 'pontos', 'estado'];
+    const insertQuery = 'INSERT INTO supervisores (numeroDocumento, nome, pontos, estado) VALUES (?, ?, ?, ?)';
     handleUpload(req, res, 'supervisores', insertQuery, columns);
 });
 
@@ -78,26 +78,43 @@ app.get('/consultaRanking/:numeroDocumento/:funcao', async (req, res) => {
 
     const selectRanking = `
     WITH Ranked AS (
-        SELECT 
-            numeroDocumento,
-            nome,
-            pontos,
-            DENSE_RANK() OVER (
-                ORDER BY pontos DESC, nome ASC
-            ) AS ranking
-        FROM 
-            ${funcao}
-    )
     SELECT 
         numeroDocumento,
         nome,
         pontos,
-        ranking
+        estado,
+        CASE
+            WHEN estado IN ('AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO') THEN 'Norte'
+            WHEN estado IN ('AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE') THEN 'Nordeste'
+            WHEN estado IN ('DF', 'GO', 'MT', 'MS') THEN 'Centro-Oeste'
+            WHEN estado IN ('ES', 'MG', 'RJ', 'SP') THEN 'Sudeste'
+            WHEN estado IN ('PR', 'RS', 'SC') THEN 'Sul'
+        END AS regiao,
+        DENSE_RANK() OVER (
+            PARTITION BY CASE
+                WHEN estado IN ('AC', 'AP', 'AM', 'PA', 'RO', 'RR', 'TO') THEN 'Norte'
+                WHEN estado IN ('AL', 'BA', 'CE', 'MA', 'PB', 'PE', 'PI', 'RN', 'SE') THEN 'Nordeste'
+                WHEN estado IN ('DF', 'GO', 'MT', 'MS') THEN 'Centro-Oeste'
+                WHEN estado IN ('ES', 'MG', 'RJ', 'SP') THEN 'Sudeste'
+                WHEN estado IN ('PR', 'RS', 'SC') THEN 'Sul'
+            END
+            ORDER BY pontos DESC, nome ASC
+        ) AS ranking
     FROM 
-        Ranked
-    WHERE 
-        numeroDocumento = ${numeroDocumento};
-    `;
+        ${funcao}
+        )
+        SELECT 
+            numeroDocumento,
+            nome,
+            pontos,
+            estado,
+            regiao,
+            ranking
+        FROM 
+            Ranked
+        WHERE 
+            numeroDocumento = ${numeroDocumento};
+ `;
 
     try {
         const connection = await mysql.createConnection(config);
@@ -108,7 +125,7 @@ app.get('/consultaRanking/:numeroDocumento/:funcao', async (req, res) => {
         console.error(error);
         res.status(500).json({ error: 'Erro ao consultar o ranking' });
     }
-});
+})
 
 app.get('/uploadArquivos', (req,res) => {
     res.render("carregarArquivos", { message: 'Insira uma planilha por vez e faça upload.', messageType: 'success' });

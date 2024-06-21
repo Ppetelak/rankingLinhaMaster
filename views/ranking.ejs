@@ -15,10 +15,10 @@
     <div class="ranking">
         <div class="container mt-5">
             <div class="row d-flex align-items-center justify-content-center">
-                <img src="/assets/logolinhamaster.png" class="img-fluid d-block" alt="Campanha Linha Master Navegando">
+                <img src="/assets/campanhanavegandocomalinhamasterlogo1.png" class="img-fluid d-block" alt="Campanha Linha Master Navegando">
             </div>
-            <h1 class="mb-4">Campanha Navegando</h1>
-            <p>Para consultar sua posição no ranking basta insirir o seu CPF ou CNPJ e selecione se é Corretora, Corretor ou Supervisor, depois só clicar em Consultar Posição no Ranking.</p>
+            <h1 class="mb-4">Consulta Ranking</h1>
+            <p>Para consultar sua posição no ranking basta insirir o seu CPF ou CNPJ e selecione se é Corretora, Corretor ou Supervisor, depois só clicar em Consultar o resultado será mostrado logo abaixo.</p>
             <form id="rankingForm" class="row g-3">
                 <div class="col-md-4">
                     <label for="numeroDocumento" class="form-label"><strong>Nº do Documento</strong></label>
@@ -51,6 +51,8 @@
                         <th>Nome</th>
                         <th>CPF/CNPJ</th>
                         <th>Pontos</th>
+                        <th>Estado</th>
+                        <th>Região</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -59,11 +61,14 @@
                         <td>...</td>
                         <td>...</td>
                         <td>...</td>
+                        <td>...</td>
+                        <td>...</td>
                     </tr>
                 </tbody>
             </table>
             </div>
-            <p>Lembrando que o ranking é atualizado todo dia 15 e 30 ou próximo dia útil de todo mês</p>
+            <p>Lembrando que o ranking é atualizado uma vez por mês após o fechamento</p>
+            <p>O ranking é por região conforme endereço cadastrado do corretor em nossa base.</p>
             <p>Para consultar o regulamento completo da campanha <a href="https://linhamaster.com.br/docs/REGULAMENTO%20-%20%20Navegando%20com%20a%20Linha%20Master%20-OFICIAL%20-%2022-05-2024.pdf" target="_blank">clique aqui</a></p>
             <div class="tablefooter">
                 <div id="logoMounthermon">
@@ -108,6 +113,8 @@
                                 <th>Nome</th>
                                 <th>CPF/CNPJ</th>
                                 <th>Pontos</th>
+                                <th>Estado </th>
+                                <th>Região</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -116,6 +123,8 @@
                                 <td>${result[0].nome}</td>
                                 <td>${result[0].numeroDocumento}</td>
                                 <td>${result[0].pontos}</td>
+                                <td>${result[0].estado}</td>
+                                <td>${result[0].regiao}</td>
                             </tr>
                         </tbody>
                     </table>
